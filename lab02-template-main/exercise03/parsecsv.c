@@ -1,8 +1,18 @@
+// ensf 461 lab 02 - exercise 03
+// oscar (30242380), somrit (30230926)
 #include <stdio.h>
 #include <string.h>
 #include "record_list.h"
 #include "util.h"
 
+
+static void free_list(record_t* head) {
+    while ( head != NULL ) {
+        record_t* tmp = next(head);
+        free(head);
+        head = tmp;
+    }
+}
 
 int main(int argc, char** argv) {
 
@@ -38,10 +48,21 @@ int main(int argc, char** argv) {
     // TODO: write the list to the output file
     // Each line of the output file should contain the average and the standard deviation
     // as a comma-separated pair (e.g., "1.23,4.56")
+    FILE* fout = fopen(argv[2], "w");
+    if ( fout == NULL ) {
+        fprintf(stderr, "Error: unable to open/create file %s\n\n", argv[2]);
+        free_list(head);
+        return -2;
+    }
 
+    for ( curr = head; curr != NULL; curr = next(curr) ) {
+        fprintf(fout, "%f,%f\n", curr->avg, curr->sdv);
+    }
+    fclose(fout);
 
     // TODO: free all the memory allocated for the list
-
+    free_list(head);
+    head = NULL;
 
     return 0;
 }

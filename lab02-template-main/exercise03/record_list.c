@@ -1,3 +1,5 @@
+// ensf 461 lab 02 - exercise 03
+// oscar (30242380), somrit (30230926)
 #include "record_list.h"
 
 record_t* append(record_t* tail, float avg, float sdv) {
@@ -24,4 +26,8 @@ record_t* append(record_t* tail, float avg, float sdv) {
 
 record_t* next(record_t* elem) {
     // TODO: given an element of the list, return the next element
+    if ( elem == NULL ) {
+        return NULL;
+    }
+    return elem->next;
 }
